@@ -1,5 +1,5 @@
 import {api} from "encore.dev/api";
-import {handlerToQLS} from "../as-encore/handlers/raw";
+import {gqlQueryHandler} from "../as-encore/handlers/raw";
 import {apolloStore, startServer} from "../tests/set-test-server";
 
 await startServer();
@@ -12,7 +12,7 @@ await startServer();
 export const testAPI = api.raw(
     { path: '/test', method: '*', expose: true},
     async (req, res) => {
-        const fn = handlerToQLS(apolloStore.server);
+        const fn = gqlQueryHandler(apolloStore.server);
         fn(req, res);
     }
     )

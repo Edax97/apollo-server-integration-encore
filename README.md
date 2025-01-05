@@ -1,39 +1,62 @@
 # Apollo server integrations for encore.ts
 
-## Features
+## Introduction
 
-Package that exposes:
-When you have [installed Encore](https://encore.dev/docs/ts/install), you can create a new Encore application and clone this example with this command.
+This package allows for defining encore.ts graphQL APIs on top of an @apollo/server instance. Specifically, 
+it provides request handlers for parsing and directing queries to the instance we define. Optionally, we pass
+to `getContext` a method to resolve query context.
 
+## Requirements
+- @apollo/server 4.0.0 or later
+- encore.dev 1.45.0 or later
+- node.js 20.0.0 or later
+
+## Installation
+First, set up an encore application
 ```bash
-encore app create my-app-name --example=ts/empty
+encore app create 
+```
+Install @apollo/server and the integration
+```bash
+npm install @apollo/server as-encore
 ```
 
-## Running locally
-```bash
-encore run
+## Usage
+
+Inside a new service, set up a raw API endpoint that will listen to client queries. Previously, you need to configure and
+start an apollo server instance and optionally give the context getter function.
+```typescript
+import {gqlQueryHandler} from "as-encore/handlers/raw";
+/**
+ * Define endpoint for testing queries to qql server
+ * @param req gql request
+ * @return res queried data
+ */
+export const gqlEndpoint = api.raw(
+        { path: '/gql', method: '*', expose: true},
+        gqlQueryHandler<Tcontext>(apolloServer, getContext)
+    )
 ```
 
-While `encore run` is running, open <http://localhost:9400/> to view Encore's [local developer dashboard](https://encore.dev/docs/ts/observability/dev-dash).
-
-## Deployment
-
-Deploy your application to a staging environment in Encore's free development cloud:
-
-```bash
-git add -A .
-git commit -m 'Commit message'
-git push encore
+## Reference
+```typescript
+/**
+ * Raw handler for parsing and directing queries to graphQL server
+ * @type <Tctx> type of query context object
+ * @param aserver apollo instance
+ * @param getContext method for resolving context
+    * @param req http IncommingMessage
+    * @param res http ServerResponse
+    * @return Promise<Tctx>
+ */
+export function gqlQueryHandler<Tctx extends BaseContext>
+    (aserver: ApolloServer<Tctx>, getContext?: CtxFn<Tctx>): RawHandler {/.../}
 ```
 
-Then head over to the [Cloud Dashboard](https://app.encore.dev) to monitor your deployment and find your production URL.
+## Contributing
 
-From there you can also connect your own AWS or GCP account to use for deployment.
+Any contribution is welcomed, see the last commit for pending work.
 
-Now off you go into the clouds!
+## Main contributor
 
-## Testing
-
-```bash
-encore test
-```
+- Edmar Campos ([Edax97](https://github.com/Edax97))
