@@ -1,15 +1,29 @@
 {
-  "name": "encore-ts-starter",
+  "name": "@as-integrations/encorets",
   "private": true,
   "version": "0.0.1",
   "description": "Encore Typescript Starter",
   "license": "MPL-2.0",
   "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
   "devDependencies": {
+    "@apollo/server": "^4.11.3",
+    "@apollo/server-integration-testsuite": "^4.11.3",
     "@types/node": "^20.5.7",
-    "typescript": "^5.2.2"
+    "encore.dev": "^1.45.1",
+    "graphql": "^16.10.0",
+    "graphql-request": "^7.1.2",
+    "graphql-tag": "^2.12.6",
+    "typescript": "^5.2.2",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "@apollo/server": "^4.0.0",
+    "encore.dev": "^1.45.0"
   },
   "dependencies": {
-    "encore.dev": "^1.45.1"
+    "encore.dev": "^1.45.0"
   }
 }

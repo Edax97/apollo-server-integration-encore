@@ -1,7 +1,8 @@
-# Empty Encore TS Template
+# Apollo server integrations for encore.ts
 
-## Developing locally
+## Features
 
+Package that exposes:
 When you have [installed Encore](https://encore.dev/docs/ts/install), you can create a new Encore application and clone this example with this command.
 
 ```bash
